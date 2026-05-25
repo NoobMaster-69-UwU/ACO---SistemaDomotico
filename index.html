@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard Domótico</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+
+<header>
+  <h1>🏠 Hogar Inteligente</h1>
+  <div class="status-badge">
+    <div class="dot" id="dot"></div>
+    <span id="statusTxt">Desconectado</span>
+  </div>
+</header>
+
+<main>
+
+  <!-- Conexión -->
+  <div class="conn-box">
+    <h2>⚙️ Conexión MQTT</h2>
+    <div class="conn-row">
+      <input id="iBroker" value="broker.hivemq.com" placeholder="Broker"/>
+      <input id="iPort"   value="8884" style="max-width:90px" placeholder="Puerto"/>
+      <input id="iPrefix" value="casa/domotica"     placeholder="Topic prefix"/>
+      <button class="btn-connect" id="btnConn" onclick="toggleConnect()">Conectar</button>
+    </div>
+  </div>
+
+  <!-- Sensores -->
+  <div>
+    <p class="section-label">📡 Monitoreo de Sensores</p>
+    <div class="sensors-grid">
+
+      <div class="sensor-card" id="cardTemp">
+        <div class="s-header"><span class="s-icon">🌡️</span> Temperatura</div>
+        <div class="s-value" id="vTemp">--<span class="s-unit"> °C</span></div>
+        <div class="s-bar-track"><div class="s-bar-fill bar-temp" id="bTemp"></div></div>
+      </div>
+
+      <div class="sensor-card" id="cardHum">
+        <div class="s-header"><span class="s-icon">💧</span> Humedad</div>
+        <div class="s-value" id="vHum">--<span class="s-unit"> %</span></div>
+        <div class="s-bar-track"><div class="s-bar-fill bar-hum" id="bHum"></div></div>
+      </div>
+
+      <div class="sensor-card" id="cardLuz">
+        <div class="s-header"><span class="s-icon">☀️</span> Luz (LDR)</div>
+        <div class="s-value" id="vLuz">--<span class="s-unit"> %</span></div>
+        <div class="s-bar-track"><div class="s-bar-fill bar-luz" id="bLuz"></div></div>
+      </div>
+
+      <div class="sensor-card" id="cardDist">
+        <div class="s-header"><span class="s-icon">📏</span> Distancia</div>
+        <div class="s-value" id="vDist">--<span class="s-unit"> cm</span></div>
+        <div class="s-bar-track"><div class="s-bar-fill bar-dist" id="bDist"></div></div>
+      </div>
+
+      <div class="sensor-card" id="cardGas">
+        <div class="s-header"><span class="s-icon">☁️</span> Gas (MQ-2)</div>
+        <div class="s-value" id="vGas">--<span class="s-unit"> ppm</span></div>
+        <div class="s-bar-track"><div class="s-bar-fill bar-gas" id="bGas"></div></div>
+      </div>
+
+      <div class="sensor-card" id="cardPir">
+        <div class="s-header"><span class="s-icon">🚶</span> Movimiento (PIR)</div>
+        <div style="padding-top:4px">
+          <span class="pir-badge" id="pirBadge">⬤ Sin movimiento</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Gráfica -->
+  <div class="chart-box">
+    <p class="section-label" style="margin-bottom:12px">📈 Historial Temperatura & Humedad</p>
+    <canvas id="chartTH"></canvas>
+  </div>
+
+  <!-- Actuadores -->
+  <div>
+    <p class="section-label">🎛️ Control de Actuadores</p>
+    <div class="actuators-grid">
+
+      <div class="act-card" id="cardALuz">
+        <div class="act-top">
+          <span class="act-name">💡 Luces</span>
+          <div class="act-led" id="ledLuz"></div>
+        </div>
+        <div class="toggle-wrap">
+          <button class="toggle" id="togLuz" onclick="toggleAct('luz')">
+            <div class="toggle-knob"></div>
+          </button>
+          <span class="act-status" id="stLuz">Apagado</span>
+        </div>
+      </div>
+
+      <div class="act-card" id="cardAVent">
+        <div class="act-top">
+          <span class="act-name">🌀 Ventilador</span>
+          <div class="act-led" id="ledVent"></div>
+        </div>
+        <div class="toggle-wrap">
+          <button class="toggle" id="togVent" onclick="toggleAct('vent')">
+            <div class="toggle-knob"></div>
+          </button>
+          <span class="act-status" id="stVent">Apagado</span>
+        </div>
+      </div>
+
+      <div class="act-card" id="cardAPuerta">
+        <div class="act-top">
+          <span class="act-name">🚪 Puerta</span>
+          <div class="act-led" id="ledPuerta"></div>
+        </div>
+        <div class="toggle-wrap">
+          <button class="toggle" id="togPuerta" onclick="toggleAct('puerta')">
+            <div class="toggle-knob"></div>
+          </button>
+          <span class="act-status" id="stPuerta">Cerrada</span>
+        </div>
+      </div>
+
+      <div class="act-card" id="cardASeg">
+        <div class="act-top">
+          <span class="act-name">🛡️ Seguridad</span>
+          <div class="act-led" id="ledSeg"></div>
+        </div>
+        <div class="toggle-wrap">
+          <button class="toggle" id="togSeg" onclick="toggleAct('seg')">
+            <div class="toggle-knob"></div>
+          </button>
+          <span class="act-status" id="stSeg">Desactivado</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Pánico -->
+  <button class="panic-btn" id="panicBtn" onclick="triggerPanic()">
+    🚨 ACTIVAR ALARMA (PÁNICO)
+  </button>
+
+  <!-- Logs -->
+  <div>
+    <p class="section-label">📋 Log MQTT</p>
+    <div class="log-box" id="logBox"></div>
+  </div>
+
+</main>
+</body>
+</html>
