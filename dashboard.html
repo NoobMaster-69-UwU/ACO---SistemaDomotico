@@ -4,10 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard Domótico</title>
-  <link rel="stylesheet" href="css/style.css"/>
+
+  <!-- Librerías externas (globales) -->
   <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script type="module" src="js/app.js"></script>
+
+  <!-- Estilos modulares -->
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/connection.css" />
+  <link rel="stylesheet" href="css/sensors.css" />
+  <link rel="stylesheet" href="css/actuators.css" />
+  <link rel="stylesheet" href="css/feedback.css" />
+
+  <!-- Lógica modular (scripts clásicos, en orden de dependencia) -->
+  <script defer src="js/config.js"></script>
+  <script defer src="js/state.js"></script>
+  <script defer src="js/logger.js"></script>
+  <script defer src="js/chart.js"></script>
+  <script defer src="js/sensors.js"></script>
+  <script defer src="js/mqtt.js"></script>
+  <script defer src="js/actuators.js"></script>
+  <script defer src="js/main.js"></script>
 </head>
 <body>
 
@@ -26,9 +43,9 @@
     <h2>⚙️ Conexión MQTT</h2>
     <div class="conn-row">
       <input id="iBroker" value="broker.hivemq.com" placeholder="Broker"/>
-      <input id="iPort"   value="8884" style="max-width:90px" placeholder="Puerto"/>
-      <input id="iPrefix" value="casa/domotica"     placeholder="Topic prefix"/>
-      <button class="btn-connect" id="btnConn" onclick="toggleConnect()">Conectar</button>
+      <input id="iPort" class="input-port" value="8884" placeholder="Puerto"/>
+      <input id="iPrefix" value="casa/domotica" placeholder="Topic prefix"/>
+      <button class="btn-connect" id="btnConn">Conectar</button>
     </div>
   </div>
 
@@ -69,7 +86,7 @@
 
       <div class="sensor-card" id="cardPir">
         <div class="s-header"><span class="s-icon">🚶</span> Movimiento (PIR)</div>
-        <div style="padding-top:4px">
+        <div class="pir-wrap">
           <span class="pir-badge" id="pirBadge">⬤ Sin movimiento</span>
         </div>
       </div>
@@ -77,9 +94,9 @@
     </div>
   </div>
 
-  <!-- Gráfica -->
+  <!-- Gráfica temperatura/humedad -->
   <div class="chart-box">
-    <p class="section-label" style="margin-bottom:12px">📈 Historial Temperatura & Humedad</p>
+    <p class="section-label">📈 Historial Temperatura & Humedad</p>
     <canvas id="chartTH"></canvas>
   </div>
 
@@ -94,7 +111,7 @@
           <div class="act-led" id="ledLuz"></div>
         </div>
         <div class="toggle-wrap">
-          <button class="toggle" id="togLuz" onclick="toggleAct('luz')">
+          <button class="toggle" id="togLuz">
             <div class="toggle-knob"></div>
           </button>
           <span class="act-status" id="stLuz">Apagado</span>
@@ -107,7 +124,7 @@
           <div class="act-led" id="ledVent"></div>
         </div>
         <div class="toggle-wrap">
-          <button class="toggle" id="togVent" onclick="toggleAct('vent')">
+          <button class="toggle" id="togVent">
             <div class="toggle-knob"></div>
           </button>
           <span class="act-status" id="stVent">Apagado</span>
@@ -120,7 +137,7 @@
           <div class="act-led" id="ledPuerta"></div>
         </div>
         <div class="toggle-wrap">
-          <button class="toggle" id="togPuerta" onclick="toggleAct('puerta')">
+          <button class="toggle" id="togPuerta">
             <div class="toggle-knob"></div>
           </button>
           <span class="act-status" id="stPuerta">Cerrada</span>
@@ -133,7 +150,7 @@
           <div class="act-led" id="ledSeg"></div>
         </div>
         <div class="toggle-wrap">
-          <button class="toggle" id="togSeg" onclick="toggleAct('seg')">
+          <button class="toggle" id="togSeg">
             <div class="toggle-knob"></div>
           </button>
           <span class="act-status" id="stSeg">Desactivado</span>
@@ -141,19 +158,22 @@
       </div>
 
     </div>
+
+    <button class="btn-auto" id="btnAuto">🔄 Volver a modo automático</button>
   </div>
 
-  <!-- Pánico -->
-  <button class="panic-btn" id="panicBtn" onclick="triggerPanic()">
+  <!-- Botón pánico -->
+  <button class="panic-btn" id="panicBtn">
     🚨 ACTIVAR ALARMA (PÁNICO)
   </button>
 
-  <!-- Logs -->
+  <!-- Log -->
   <div>
     <p class="section-label">📋 Log MQTT</p>
     <div class="log-box" id="logBox"></div>
   </div>
 
 </main>
+
 </body>
 </html>
