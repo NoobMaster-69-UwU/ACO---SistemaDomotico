@@ -1,0 +1,78 @@
+/* ── Sensores ── */
+
+.sensors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+}
+
+.sensor-card {
+  background: #1a1d2e;
+  border: 1px solid #2d3154;
+  border-radius: 14px;
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color .3s;
+}
+
+.sensor-card.alert { border-color: #ef4444; }
+
+.s-header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.s-icon { font-size: 18px; }
+
+.s-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #f1f5f9;
+  line-height: 1;
+}
+
+.s-unit { font-size: 14px; font-weight: 400; color: #64748b; }
+
+.s-bar-track {
+  height: 5px;
+  background: #0f1117;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.s-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width .6s ease;
+  width: 0%;
+}
+
+.bar-temp  { background: linear-gradient(90deg, #f97316, #ef4444); }
+.bar-hum   { background: linear-gradient(90deg, #06b6d4, #3b82f6); }
+.bar-luz   { background: linear-gradient(90deg, #fbbf24, #f59e0b); }
+.bar-dist  { background: linear-gradient(90deg, #8b5cf6, #6366f1); }
+.bar-gas   { background: linear-gradient(90deg, #22c55e, #ef4444); }
+
+/* Contenedor del badge PIR */
+.pir-wrap { padding-top: 4px; }
+
+.pir-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: #1e293b;
+  color: #94a3b8;
+  transition: all .3s;
+}
+.pir-badge.active {
+  background: #450a0a;
+  color: #fca5a5;
+}

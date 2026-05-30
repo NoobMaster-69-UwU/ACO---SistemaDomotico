@@ -1,0 +1,55 @@
+/* ── Conexión MQTT ── */
+
+.conn-box {
+  background: #1a1d2e;
+  border: 1px solid #2d3154;
+  border-radius: 14px;
+  padding: 18px 22px;
+}
+
+.conn-box h2 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: #64748b;
+  margin-bottom: 12px;
+}
+
+.conn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.conn-row input {
+  background: #0f1117;
+  border: 1px solid #2d3154;
+  border-radius: 8px;
+  color: #e2e8f0;
+  padding: 8px 12px;
+  font-size: 13px;
+  flex: 1;
+  min-width: 140px;
+}
+
+.conn-row input:focus { outline: none; border-color: #6366f1; }
+
+/* Campo de puerto, más angosto */
+.input-port { max-width: 90px; }
+
+.btn-connect {
+  padding: 8px 22px;
+  background: #6366f1;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s;
+  white-space: nowrap;
+}
+.btn-connect:hover { background: #4f46e5; }
+.btn-connect.disc { background: #374151; }
+.btn-connect.disc:hover { background: #4b5563; }

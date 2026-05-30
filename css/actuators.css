@@ -1,0 +1,109 @@
+/* ── Actuadores y botón de pánico ── */
+
+.actuators-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+  gap: 14px;
+}
+
+.act-card {
+  background: #1a1d2e;
+  border: 1px solid #2d3154;
+  border-radius: 14px;
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: border-color .3s;
+}
+
+.act-card.active { border-color: #22c55e; }
+
+.act-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.act-name {
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.act-led {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #1e293b;
+  border: 1px solid #334155;
+  transition: all .3s;
+}
+.act-led.on { background: #22c55e; border-color: #22c55e; box-shadow: 0 0 6px #22c55e88; }
+
+/* Toggle switch */
+.toggle-wrap { display: flex; align-items: center; gap: 10px; }
+
+.toggle {
+  position: relative;
+  width: 44px; height: 24px;
+  background: #334155;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background .3s;
+  border: none;
+  outline: none;
+}
+.toggle.on { background: #22c55e; }
+
+.toggle-knob {
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 18px; height: 18px;
+  background: white;
+  border-radius: 50%;
+  transition: left .3s;
+  pointer-events: none;
+}
+.toggle.on .toggle-knob { left: 23px; }
+
+.act-status { font-size: 12px; color: #64748b; }
+.act-status.on { color: #22c55e; }
+
+/* Botón "volver a modo automático" */
+.btn-auto {
+  width: 100%;
+  margin-top: 14px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #2d3154;
+  background: #1a1d2e;
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s;
+}
+.btn-auto:hover { background: #232744; color: #e2e8f0; }
+
+/* ── Botón pánico ── */
+.panic-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: 2px solid #ef4444;
+  background: transparent;
+  color: #ef4444;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all .2s;
+  letter-spacing: .02em;
+}
+.panic-btn:hover { background: #450a0a; }
+.panic-btn.active { background: #ef4444; color: white; }
