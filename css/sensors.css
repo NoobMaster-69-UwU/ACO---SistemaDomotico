@@ -7,14 +7,23 @@
 }
 
 .sensor-card {
-  background: #1a1d2e;
-  border: 1px solid #2d3154;
-  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(35, 39, 60, 0.8), rgba(20, 22, 35, 0.8));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
   padding: 18px 16px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  transition: border-color .3s;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sensor-card:hover {
+  transform: translateY(-4px);
+  border-color: #60a5fa;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(59, 130, 246, 0.4), inset 0 0 10px rgba(59, 130, 246, 0.1);
 }
 
 .sensor-card.alert { border-color: #ef4444; }
@@ -22,9 +31,10 @@
 .s-header {
   display: flex;
   align-items: center;
-  gap: 7px;
-  font-size: 12px;
-  color: #94a3b8;
+  gap: 8px;
+  font-size: 13px;
+  color: #cbd5e1;
+  font-weight: 500;
 }
 
 .s-icon { font-size: 18px; }
@@ -32,11 +42,29 @@
 .s-value {
   font-size: 28px;
   font-weight: 700;
-  color: #f1f5f9;
+  color: #ffffff;
   line-height: 1;
 }
 
-.s-unit { font-size: 14px; font-weight: 400; color: #64748b; }
+/* ── Icon Colors ── */
+#cardTemp .s-icon svg { color: #fb923c; filter: drop-shadow(0 0 4px rgba(249, 115, 22, 0.8)) drop-shadow(0 0 10px rgba(249, 115, 22, 0.5)); }
+#cardHum .s-icon svg { color: #22d3ee; filter: drop-shadow(0 0 4px rgba(6, 182, 212, 0.8)) drop-shadow(0 0 10px rgba(6, 182, 212, 0.5)); }
+#cardLuz .s-icon svg { color: #fde047; filter: drop-shadow(0 0 4px rgba(234, 179, 8, 0.8)) drop-shadow(0 0 10px rgba(234, 179, 8, 0.5)); }
+#cardDist .s-icon svg { color: #c084fc; filter: drop-shadow(0 0 4px rgba(168, 85, 247, 0.8)) drop-shadow(0 0 10px rgba(168, 85, 247, 0.5)); }
+#cardGas .s-icon svg { color: #fca5a5; filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.8)) drop-shadow(0 0 10px rgba(239, 68, 68, 0.5)); }
+#cardPir .s-icon svg { color: #86efac; filter: drop-shadow(0 0 4px rgba(34, 197, 94, 0.8)) drop-shadow(0 0 10px rgba(34, 197, 94, 0.5)); }
+
+body.light-mode #cardTemp .s-icon svg,
+body.light-mode #cardHum .s-icon svg,
+body.light-mode #cardLuz .s-icon svg,
+body.light-mode #cardDist .s-icon svg,
+body.light-mode #cardGas .s-icon svg,
+body.light-mode #cardPir .s-icon svg {
+  color: currentColor;
+  filter: none;
+}
+
+.s-unit { font-size: 16px; font-weight: 400; color: #94a3b8; }
 
 .s-bar-track {
   height: 5px;
@@ -52,11 +80,11 @@
   width: 0%;
 }
 
-.bar-temp  { background: linear-gradient(90deg, #f97316, #ef4444); }
-.bar-hum   { background: linear-gradient(90deg, #06b6d4, #3b82f6); }
-.bar-luz   { background: linear-gradient(90deg, #fbbf24, #f59e0b); }
-.bar-dist  { background: linear-gradient(90deg, #8b5cf6, #6366f1); }
-.bar-gas   { background: linear-gradient(90deg, #22c55e, #ef4444); }
+.bar-temp  { background: linear-gradient(90deg, #f97316, #ef4444); box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
+.bar-hum   { background: linear-gradient(90deg, #06b6d4, #3b82f6); box-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
+.bar-luz   { background: linear-gradient(90deg, #fbbf24, #f59e0b); box-shadow: 0 0 10px rgba(245, 158, 11, 0.5); }
+.bar-dist  { background: linear-gradient(90deg, #8b5cf6, #6366f1); box-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
+.bar-gas   { background: linear-gradient(90deg, #22c55e, #ef4444); box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
 
 /* Contenedor del badge PIR */
 .pir-wrap { padding-top: 4px; }

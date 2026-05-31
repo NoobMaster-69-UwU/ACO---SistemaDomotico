@@ -6,6 +6,9 @@
   <title>Dashboard Domótico</title>
 
   <!-- Librerías externas (globales) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -29,10 +32,20 @@
 <body>
 
 <header>
-  <h1>🏠 Hogar Inteligente</h1>
-  <div class="status-badge">
-    <div class="dot" id="dot"></div>
-    <span id="statusTxt">Desconectado</span>
+  <div class="header-title">
+    <h1 class="neon-text">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Sistema Domótico Inteligente
+    </h1>
+  </div>
+  <div class="header-controls">
+    <button id="themeToggle" class="theme-btn" title="Alternar tema">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6.364 6.364 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    </button>
+    <div class="status-badge neon-status">
+      <div class="dot" id="dot"></div>
+      <span id="statusTxt">Desconectado</span>
+    </div>
   </div>
 </header>
 
@@ -40,7 +53,7 @@
 
   <!-- Conexión -->
   <div class="conn-box">
-    <h2>⚙️ Conexión MQTT</h2>
+    <h2><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px; margin-top: -3px;"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Conexión MQTT</h2>
     <div class="conn-row">
       <input id="iBroker" value="broker.hivemq.com" placeholder="Broker"/>
       <input id="iPort" class="input-port" value="8884" placeholder="Puerto"/>
@@ -51,41 +64,41 @@
 
   <!-- Sensores -->
   <div>
-    <p class="section-label">📡 Monitoreo de Sensores</p>
+    <p class="section-label"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top: -2px;"><path d="M2 12h4l3-9 5 18 3-9h5"/></svg> Monitoreo de Sensores</p>
     <div class="sensors-grid">
 
       <div class="sensor-card" id="cardTemp">
-        <div class="s-header"><span class="s-icon">🌡️</span> Temperatura</div>
+        <div class="s-header"><span class="s-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></svg></span> <span class="neon-text">Temperatura</span></div>
         <div class="s-value" id="vTemp">--<span class="s-unit"> °C</span></div>
         <div class="s-bar-track"><div class="s-bar-fill bar-temp" id="bTemp"></div></div>
       </div>
 
       <div class="sensor-card" id="cardHum">
-        <div class="s-header"><span class="s-icon">💧</span> Humedad</div>
+        <div class="s-header"><span class="s-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg></span> <span class="neon-text">Humedad</span></div>
         <div class="s-value" id="vHum">--<span class="s-unit"> %</span></div>
         <div class="s-bar-track"><div class="s-bar-fill bar-hum" id="bHum"></div></div>
       </div>
 
       <div class="sensor-card" id="cardLuz">
-        <div class="s-header"><span class="s-icon">☀️</span> Luz (LDR)</div>
+        <div class="s-header"><span class="s-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span> <span class="neon-text">Luz (LDR)</span></div>
         <div class="s-value" id="vLuz">--<span class="s-unit"> %</span></div>
         <div class="s-bar-track"><div class="s-bar-fill bar-luz" id="bLuz"></div></div>
       </div>
 
       <div class="sensor-card" id="cardDist">
-        <div class="s-header"><span class="s-icon">📏</span> Distancia</div>
+        <div class="s-header"><span class="s-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></svg></span> <span class="neon-text">Distancia</span></div>
         <div class="s-value" id="vDist">--<span class="s-unit"> cm</span></div>
         <div class="s-bar-track"><div class="s-bar-fill bar-dist" id="bDist"></div></div>
       </div>
 
       <div class="sensor-card" id="cardGas">
-        <div class="s-header"><span class="s-icon">☁️</span> Gas (MQ-2)</div>
+        <div class="s-header"><span class="s-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg></span> <span class="neon-text">Gas (MQ-2)</span></div>
         <div class="s-value" id="vGas">--<span class="s-unit"> ppm</span></div>
         <div class="s-bar-track"><div class="s-bar-fill bar-gas" id="bGas"></div></div>
       </div>
 
       <div class="sensor-card" id="cardPir">
-        <div class="s-header"><span class="s-icon">🚶</span> Movimiento (PIR)</div>
+        <div class="s-header"><span class="s-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1"/><path d="m9 20 3-6 3 6"/><path d="m6 8 6 2 6-2"/><path d="M12 10v4"/></svg></span> <span class="neon-text">Movimiento (PIR)</span></div>
         <div class="pir-wrap">
           <span class="pir-badge" id="pirBadge">⬤ Sin movimiento</span>
         </div>
@@ -96,18 +109,18 @@
 
   <!-- Gráfica temperatura/humedad -->
   <div class="chart-box">
-    <p class="section-label">📈 Historial Temperatura & Humedad</p>
+    <p class="section-label"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top: -2px;"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Historial Temperatura & Humedad</p>
     <canvas id="chartTH"></canvas>
   </div>
 
   <!-- Actuadores -->
   <div>
-    <p class="section-label">🎛️ Control de Actuadores</p>
+    <p class="section-label"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top: -2px;"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg> Control de Actuadores</p>
     <div class="actuators-grid">
 
       <div class="act-card" id="cardALuz">
         <div class="act-top">
-          <span class="act-name">💡 Luces</span>
+          <span class="act-name"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg> <span class="neon-text">Luces</span></span>
           <div class="act-led" id="ledLuz"></div>
         </div>
         <div class="toggle-wrap">
@@ -120,7 +133,7 @@
 
       <div class="act-card" id="cardAVent">
         <div class="act-top">
-          <span class="act-name">🌀 Ventilador</span>
+          <span class="act-name"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M10.827 16.379a6.082 6.082 0 0 1-8.618-7.002l5.412 1.45a6.082 6.082 0 0 0 7.002-8.618l-1.45 5.412a6.082 6.082 0 0 1 8.618 7.002l-5.412-1.45a6.082 6.082 0 0 0-7.002 8.618l1.45-5.412Z"/><path d="M12 12v.01"/></svg> <span class="neon-text">Ventilador</span></span>
           <div class="act-led" id="ledVent"></div>
         </div>
         <div class="toggle-wrap">
@@ -133,7 +146,7 @@
 
       <div class="act-card" id="cardAPuerta">
         <div class="act-top">
-          <span class="act-name">🚪 Puerta</span>
+          <span class="act-name"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M18 20V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v14"/><path d="M2 20h20"/><path d="M14 12v.01"/></svg> <span class="neon-text">Puerta</span></span>
           <div class="act-led" id="ledPuerta"></div>
         </div>
         <div class="toggle-wrap">
@@ -146,7 +159,7 @@
 
       <div class="act-card" id="cardASeg">
         <div class="act-top">
-          <span class="act-name">🛡️ Seguridad</span>
+          <span class="act-name"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg> <span class="neon-text">Seguridad</span></span>
           <div class="act-led" id="ledSeg"></div>
         </div>
         <div class="toggle-wrap">
@@ -159,21 +172,37 @@
 
     </div>
 
-    <button class="btn-auto" id="btnAuto">🔄 Volver a modo automático</button>
+    <button class="btn-auto" id="btnAuto"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top: -2px;"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg> Volver a modo automático</button>
   </div>
 
   <!-- Botón pánico -->
   <button class="panic-btn" id="panicBtn">
-    🚨 ACTIVAR ALARMA (PÁNICO)
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px; margin-top: -2px;"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg> ACTIVAR ALARMA (PÁNICO)
   </button>
 
   <!-- Log -->
   <div>
-    <p class="section-label">📋 Log MQTT</p>
+    <p class="section-label"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-top: -2px;"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg> Log MQTT</p>
     <div class="log-box" id="logBox"></div>
   </div>
 
 </main>
+
+<script>
+  // Theme toggle logic (visual only)
+  const themeToggleBtn = document.getElementById('themeToggle');
+  const moonIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6.364 6.364 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>`;
+  const sunIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>`;
+
+  themeToggleBtn.addEventListener('click', () => {
+    document.body.classList.toggle('light-mode');
+    if(document.body.classList.contains('light-mode')) {
+      themeToggleBtn.innerHTML = sunIcon;
+    } else {
+      themeToggleBtn.innerHTML = moonIcon;
+    }
+  });
+</script>
 
 </body>
 </html>
